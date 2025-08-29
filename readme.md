@@ -33,4 +33,9 @@ ContactSaver/
 ├── readme.md         # (Currently under development)
 └── [requirements.txt] *(if you add dependencies)*
 
+## Contributors
 
+* Perpetual Meninwa
+* Oluwaseyi Adenuga
+* Adebiyi Naheemot
+* Ekpo David Friday
