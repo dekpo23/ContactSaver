@@ -3,6 +3,7 @@ import file_ops
 
 def localpath():
     folder = Path('participant_pkg')
+    folder.mkdir(exist_ok = True)
     return folder / 'participants.csv'
 
 def participant():
@@ -11,6 +12,7 @@ def participant():
         while True:
             j = True
             name = input('Enter participant\'s name here: ')
+            name = name.strip()
             if ' ' in name:
                 for i in name.split(' '):
                     if i.isalpha() == False:
@@ -19,9 +21,9 @@ def participant():
                     dic['name'] = name
                     break
             else:
-                name = name.strip()
-                if name.isalpha():
+                if name.isalpha() == True:
                     dic['name'] = name
+                    break
                 elif len(name) == 0:
                     print('Name cannot be empty') 
                 else:
@@ -74,7 +76,7 @@ def main():
     try:
         choice = int(input('Enter 1 to save participant details, 2 to view participants: '))
         if choice == 1:
-            num_people = int(input('Enter number of participants'))
+            num_people = int(input('Enter number of participants: '))
             participant_list(num_people)
         elif choice == 2:
             print(participant_details())
