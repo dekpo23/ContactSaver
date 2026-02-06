@@ -1,63 +1,47 @@
 from pathlib import Path
 import file_ops
+import re
 
 def localpath():
     folder = Path('participant_pkg')
-    folder.mkdir(exist_ok = True)
+    folder.mkdir(exist_ok=True)
     return folder / 'participants.csv'
 
 def participant():
     while True:
         dic = {}
         while True:
-            j = True
-            name = input('Enter participant\'s name here: ')
-            name = name.strip()
-            if ' ' in name:
-                for i in name.split(' '):
-                    if i.isalpha() == False:
-                        j = False
-                if  j == True:
-                    dic['name'] = name
-                    break
+            name = input('Enter participant\'s name here: ').strip()
+            if re.match(r'^[A-Za-z ]+$', name):
+                dic['name'] = name
+                break
             else:
-                if name.isalpha() == True:
-                    dic['name'] = name
-                    break
-                elif len(name) == 0:
-                    print('Name cannot be empty') 
-                else:
-                    print('Please enter correct name')
+                print('Please enter a valid name')
 
-        
         while True:
             age = input('Enter participant\'s age here: ')
-            try:
-                age = int(age)
-                if age <= 200:
-                    dic['age'] = age
-                    break
-                else:
-                    print('Enter correct age please')
-            except ValueError as e:
-                 print('Enter  correct age please')
-                
+            if age.isdigit() and 0 < int(age) <= 200:
+                dic['age'] = int(age)
+                break
+            else:
+                print('Enter a valid age please')
+
         while True:
             phone = input('Enter participant\'s phone here: ')
-            if len(phone) == 11 and phone.isdigit():
+            if re.match(r'^\d{11}$', phone):
                 dic['phone'] = phone
                 break
             else:
-                print('Please enter correct phone number')
+                print('Please enter a valid phone number')
+
         while True:
-            track = input('Enter participant\'s track here: ')
-            if track.isdigit():
-                print('Enter correct track please')
-            elif len(track) == 0:
-                print('Track cannot be empty') 
-            else:
+            track = input('Enter participant\'s track here: ').strip()
+            if track:
                 dic['track'] = track
                 break
+            else:
+                print('Track cannot be empty')
+
         return dic
 
 def participant_list(n):
@@ -69,8 +53,6 @@ def participant_list(n):
 def participant_details():
     path = localpath()
     return file_ops.load_participants(path)
-    
-
 
 def main():
     try:
@@ -85,6 +67,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-        
-
-
